@@ -47,7 +47,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransaction = [
+  final List<Transaction> _userTransactions = [
     // Transaction(
     //     id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
     // Transaction(
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   List<Transaction> get _resentTransactions {
-    return _userTransaction.where((tx) {
+    return _userTransactions.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(
         Duration(days: 7),
       ));
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: DateTime.now().toString());
 
     setState(() {
-      _userTransaction.add(newTx);
+      _userTransactions.add(newTx);
     });
   }
 
@@ -89,6 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -110,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_resentTransactions),
-            TransactionList(_userTransaction)
+            TransactionList(_userTransactions, _deleteTransaction)
           ],
         ),
       ),
