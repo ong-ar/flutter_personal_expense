@@ -1,23 +1,58 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './adaptive_flatbutton.dart';
 
+/// Widget Lifecycle (Stateful)
+///
+/// Constructor Function
+/// initState()
+/// build()
+/// setState()
+/// didUpdateWidget()
+/// build()
+/// dispose()
+
 class NewTransaction extends StatefulWidget {
   final Function _addTx;
 
-  NewTransaction(this._addTx);
+  NewTransaction(this._addTx) {
+    print('Constructor NewTransaction Widget');
+  }
 
   @override
-  _NewTransactionState createState() => _NewTransactionState();
+  _NewTransactionState createState() {
+    print('createState NewTransaction Widget');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _selectedDate;
+
+  _NewTransactionState() {
+    print('createState NewTransaction State');
+  }
+
+  @override
+  void initState() {
+    print('initState NewTransaction State');
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(NewTransaction oldWidget) {
+    print('didUpdateWidget NewTransaction State');
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    print('dispose NewTransaction State');
+    super.dispose();
+  }
 
   final FocusNode _amountNode = FocusNode();
 
