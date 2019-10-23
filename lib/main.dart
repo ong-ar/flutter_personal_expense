@@ -1,13 +1,17 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:flutter/services.dart';
 import 'package:flutter_personal_expense/widgets/new_transaction.dart';
 import 'package:flutter_personal_expense/widgets/transaction_list.dart';
 import './widgets/chart.dart';
 
 import './models/transaction.dart';
+
+/// app lifecycle
+/// inactive
+/// paused
+/// resumed
+/// suspending
 
 void main() {
   // SystemChrome.setPreferredOrientations([
@@ -56,7 +60,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransactions = [
     // Transaction(
     //     id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
@@ -76,6 +80,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool _showChart = false;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   void _addNewTransaction(
       String txTitle, double txAmount, DateTime chosenDate) {
